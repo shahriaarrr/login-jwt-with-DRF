@@ -5,6 +5,10 @@ name = "pypi"
 
 [packages]
 django = "4.1.5"
+djangorestframework = "*"
+markdown = "*"
+django-filter = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 
