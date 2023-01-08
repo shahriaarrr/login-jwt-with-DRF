@@ -19,3 +19,24 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
+class LoginSerializer(serializers.ModelSerializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+    class Meta:
+        model = User
+        fields = ('username', 'password')
+
+    def validate(self, attrs):
+        username = attrs.get('username')
+        password = attrs.get('password')
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("User does not exist")
+
+        if user.password != password:
+            raise serializers.ValidationError("Incorrect password")
+        
+        return super().validate(attrs)
